@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+*.log
+
+# local secrets / config
+*.env
+config.yaml
+
+# OS
+.DS_Store

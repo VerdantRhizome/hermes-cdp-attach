@@ -1,0 +1,9 @@
+name: hermes-cdp-attach
+version: 0.1.0
+description: "Lazy-attach the Android Chrome CDP forward before any browser_* tool runs. If the localhost CDP endpoint (set via browser.cdp_url) is down, it re-runs the android-chrome-cdp-bridge reconnect (uv run main.py) so Hermes can always drive the phone's Chrome. The forwarder location is resolved via browser.cdp_forwarder config, PATH, or a ~/projects default."
+author: AveryRPeterson
+kind: standalone
+platforms:
+  - linux
+hooks:
+  - pre_tool_call
