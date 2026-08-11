@@ -88,6 +88,33 @@ def _read_cdp_url() -> str:
     return os.environ.get("BROWSER_CDP_URL", "").strip()
 
 
+def _count_cdp_targets(port: int, timeout: float = 1.0) -> int | None:
+    """Best-effort count of ``/json/list`` entries (a saturation gauge).
+
+    Android Chrome keeps inactive/backgrounded windows' tabs in the devtools
+    target list even when their renderers are asleep. A very high count (tens to
+    hundreds) means the CDP server is saturated by dead targets, which can make
+    the high-level ``browser_*`` open path return HTTP 500 / wedge the endpoint.
+    This is a *signal* only — the raw-CDP backend filters to live (``attached``)
+    targets and must work regardless; this just surfaces a user-side remedy.
+    Returns None on any error (never raises into the agent loop).
+    """
+    import http.client
+
+    try:
+        conn = http.client.HTTPConnection("127.0.0.1", port, timeout=timeout)
+        conn.request("GET", "/json/list")
+        resp = conn.getresponse()
+        body = resp.read().decode("utf-8", "replace")
+        conn.close()
+        import json
+
+        data = json.loads(body)
+        return len(data) if isinstance(data, list) else None
+    except Exception:
+        return None
+
+
 def _attach() -> None:
     """Run the reconnect wrapper for the configured CDP port."""
     attach_script = _resolve_attach_script()
@@ -107,6 +134,20 @@ def _attach() -> None:
         )
     except Exception:
         # Observer hook: never raise into the agent loop.
+        pass
+    # Non-blocking saturation signal: many inactive-window tabs in the CDP
+    # target list can cause HTTP 500 / endpoint wedge on the open path.
+    try:
+        n = _count_cdp_targets(port)
+        if n is not None and n > 50:
+            sys.stderr.write(
+                f"[hermes-cdp-attach] CDP target list is large ({n} entries). "
+                "If browser_* calls fail with HTTP 500, close inactive Chrome "
+                "windows (Manage windows -> Inactive) to relieve devtools "
+                "saturation. The raw-CDP backend filters to live targets and "
+                "still works regardless.\n"
+            )
+    except Exception:
         pass
 
 
