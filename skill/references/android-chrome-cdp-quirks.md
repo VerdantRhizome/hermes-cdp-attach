@@ -221,7 +221,7 @@ Do NOT claim a change works on the strength of a stale run. Verify it in
 isolation with an ad-hoc script:
 
 - Write a throwaway verifier at an **OS-safe temp path**: on Termux `/tmp` is
-  non-writable, so use `/data/data/com.termux/files/usr/tmp/hermes-verify-<name>.py`
+  non-writable, so use `$TMPDIR/hermes-verify-<name>.py`
   (or `$HOME`). Never write to `/tmp`.
 - **Stub the network** so the test needs no live endpoint. For the saturation
   gauge, `monkeypatch http.client.HTTPConnection` to return a `FakeConn` serving

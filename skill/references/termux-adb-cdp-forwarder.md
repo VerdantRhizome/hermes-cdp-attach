@@ -11,7 +11,7 @@ What it does:
 
 ## Requirements
 - `adb` — in Termux at
-  `/data/data/com.termux/files/usr/opt/android-sdk/platform-tools/adb`
+  `adb (on PATH, or `$ANDROID_SDK/platform-tools/adb`)`
   (or on `PATH`).
 - `python3` + `zeroconf` (`pip install "zeroconf>=0.39.0"`; 0.39.4 verified OK).
 - Phone: Settings → Developer Options → **Wireless debugging** ON, and Chrome
