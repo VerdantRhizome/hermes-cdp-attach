@@ -240,3 +240,18 @@ isolation with an ad-hoc script:
 
 This discipline lets CDP-side changes be proven correct even on a wedged
 endpoint, instead of shipping unverified or waiting for the link to come back.
+
+## Before pushing this repo (or any of the CDP repos) public
+
+These repos carry real device details (LAN IPs, `emulator-5554`/Tab S9 serials,
+Termux absolute paths, origin-project leftovers). Before any public push, run
+the **`repo-sanitization` skill** — it covers the full working-tree + history
+scrub AND the commit-message scan (`git log <branch> --format="%B"`), which is
+the step that most often gets missed (a scrub commit message itself can leak
+the very PII it removes).
+
+Quick pre-push scan:
+```bash
+grep -rnE "192\.168\.[0-9]+\.[0-9]+|/data/data/com\.termux|Rosyutu|patreon" --include="*.py" --include="*.md" .
+git log <branch> --format="%B" | grep -nE "192\.168\.|/data/data/com\.termux|patreon"
+```
