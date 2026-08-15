@@ -23,11 +23,11 @@ the old paired key.
 ```sh
 # 1. Is there more than one adb, and are they different versions?
 which -a adb
-/data/data/com.termux/files/usr/opt/android-sdk/platform-tools/adb version   # SDK (v36)
-/data/data/com.termux/files/usr/bin/adb version                                  # stray (v35)?
+$PREFIX/opt/android-sdk/platform-tools/adb version   # SDK (v36)
+$PREFIX/bin/adb version                               # stray (v35)?
 
 # 2. Any orphaned daemon from the old version? (stale log on a DIFFERENT port)
-ls -la /data/data/com.termux/files/usr/tmp/adb.*.log
+ls -la $TMPDIR/adb.*.log
 ps -ef | grep '[a]db'            # expect only the client; no lingering daemon
 
 # 3. Current client key is stable? (usually yes — the mismatch is device-side)

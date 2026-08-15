@@ -276,7 +276,7 @@ error: protocol fault (couldn't read status): Connection reset by peer
 This appears even on `adb pair`, `adb connect`, and plain `adb devices -l`. The TLS handshake is reset by the device **before** the Allow dialog is offered — which is exactly why the user never sees the Allow prompt.
 
 Root causes observed:
-- **Two `adb` binaries with different versions.** e.g. `/usr/bin/adb` = v35.0.2 (`Installed as /data/data/com.termux/files/usr/bin/adb`) vs the SDK `adb` = v36.0.0 (`.../platform-tools/adb`). The tablet's pairing was established under the OLD key/version; the new client's handshake is rejected. Confirm with `which -a adb` and `<each> version`. A leftover daemon from the old version (stale log `adb.<port>.log` in `/data/.../usr/tmp`, a different port than 5037) also interferes.
+- **Two `adb` binaries with different versions.** e.g. `/usr/bin/adb` = v35.0.2 (`$PREFIX/bin/adb`) vs the SDK `adb` = v36.0.0 (`$PREFIX/opt/android-sdk/platform-tools/adb`). The tablet's pairing was established under the OLD key/version; the new client's handshake is rejected. Confirm with `which -a adb` and `<each> version`. A leftover daemon from the old version (stale log `adb.<port>.log` in `$TMPDIR`, a different port than 5037) also interferes.
 - **Termux `adb` version bump** (or `android-sdk` package update) silently rotated the client key while the tablet still holds the old one.
 - **`~/.android/adbkey`** is usually stable (check `stat -c '%y'`); the mismatch is almost always the *device-side* stored key vs the *current* client.
 
