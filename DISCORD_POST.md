@@ -10,13 +10,13 @@ core. Three pieces, all standalone:
    mDNS-discovers the phone's Wireless Debugging port, keeps `adb forward
    tcp:9222 localabstract:chrome_devtools_remote` alive, exposes phone Chrome
    as a local CDP endpoint. Pure Python + uv.
-   https://github.com/AveryRPeterson/android-chrome-cdp-bridge
+   https://github.com/VerdantRhizome/android-chrome-cdp-bridge
 
 2. hermes-cdp-attach (the plugin)
    Standalone Hermes plugin: a pre_tool_call hook that lazily re-attaches the
    forward before any browser_* call. Portable forwarder discovery (config ->
    PATH -> default) so it works no matter where you clone the forwarder.
-   https://github.com/AveryRPeterson/hermes-cdp-attach
+   https://github.com/VerdantRhizome/hermes-cdp-attach
 
 3. hermes-android-chrome-cdp (the skill)
    Documents the core patch on feat/android-chrome-raw-cdp: Android Chrome CDP

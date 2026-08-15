@@ -15,9 +15,9 @@ Hermes control Android Chrome on Termux / Android where `agent-browser`
 
 | Piece | Repo | Role |
 |-------|------|------|
-| **This plugin** | `AveryRPeterson/hermes-cdp-attach` | Lazy-attach hook (this repo) |
-| **The forwarder** | [`AveryRPeterson/android-chrome-cdp-bridge`](https://github.com/AveryRPeterson/android-chrome-cdp-bridge) | mDNS ADB discovery + keep-alive `adb forward` to a local CDP endpoint |
-| **The core patch** (optional, for high-level tools) | [`AveryRPeterson/hermes-agent` @ `feat/android-chrome-raw-cdp`](https://github.com/AveryRPeterson/hermes-agent/tree/feat/android-chrome-raw-cdp) | Raw-CDP backend so `browser_navigate` / `browser_click` / etc. work on Android |
+| **This plugin** | `VerdantRhizome/hermes-cdp-attach` | Lazy-attach hook (this repo) |
+| **The forwarder** | [`VerdantRhizome/android-chrome-cdp-bridge`](https://github.com/VerdantRhizome/android-chrome-cdp-bridge) | mDNS ADB discovery + keep-alive `adb forward` to a local CDP endpoint |
+| **The core patch** (optional, for high-level tools) | [`VerdantRhizome/hermes-agent` @ `feat/android-chrome-raw-cdp`](https://github.com/VerdantRhizome/hermes-agent/tree/feat/android-chrome-raw-cdp) | Raw-CDP backend so `browser_navigate` / `browser_click` / etc. work on Android |
 
 You only *need* this plugin + the forwarder for the raw-CDP path
 (`browser.cdp_url` + `browser_cdp`). For full high-level tool support, also
@@ -27,13 +27,13 @@ apply the core patch from the feat branch.
 
 ```bash
 # 1. This plugin
-git clone https://github.com/AveryRPeterson/hermes-cdp-attach.git
+git clone https://github.com/VerdantRhizome/hermes-cdp-attach.git
 mkdir -p ~/.hermes/plugins/hermes-cdp-attach
 cp -r hermes-cdp-attach/plugin/* ~/.hermes/plugins/hermes-cdp-attach/
 cp -r hermes-cdp-attach/skill ~/.hermes/skills/hermes/hermes-cdp-attach
 
 # 2. The forwarder (clone anywhere; the plugin finds it)
-git clone https://github.com/AveryRPeterson/android-chrome-cdp-bridge.git
+git clone https://github.com/VerdantRhizome/android-chrome-cdp-bridge.git
 cd android-chrome-cdp-bridge && uv run main.py   # first run pairs ADB
 ```
 
@@ -76,7 +76,7 @@ cp -r tools/.../hermes-android-chrome-cdp/. ~/.hermes/skills/software-developmen
 ```
 
 Or read it inline at
-<https://github.com/AveryRPeterson/hermes-agent/tree/feat/android-chrome-raw-cdp>.
+<https://github.com/VerdantRhizome/hermes-agent/tree/feat/android-chrome-raw-cdp>.
 
 ## Verify
 

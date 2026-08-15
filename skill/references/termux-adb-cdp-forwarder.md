@@ -1,6 +1,6 @@
 # Termux ADB → Chrome CDP Forwarder (working recipe)
 
-Project: `~/projects/android-chrome-cdp-bridge/main.py`  (repo: `android-chrome-cdp-bridge`)
+Project: `main.py` in the `android-chrome-cdp-bridge` repo (clone it anywhere; this doc uses `$BRIDGE_DIR` for the checkout)
 
 What it does:
 - mDNS-discovers the Android **Wireless debugging** ADB service
@@ -20,7 +20,8 @@ What it does:
 
 ## Run
 ```sh
-python3 ~/projects/android-chrome-cdp-bridge/main.py
+cd "$BRIDGE_DIR"   # your android-chrome-cdp-bridge checkout
+python3 main.py
 ```
 Success output:
 ```
